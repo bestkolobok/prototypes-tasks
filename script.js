@@ -1,35 +1,39 @@
-var studentOperator = {
+(function() {
+  var student1 = {
+    name: 'Oleg',
+    sex: 'mail',
+  };
 
-  getSortedMarks: function() {
+  var student2 = student1;
 
-    return this.marks.sort(function(mark1, mark2) {
-      if (mark1 === mark2) return 0;
-      if (mark1 > mark2) return 1;
+  console.log('Case 0: object reference', student2);
 
-      return -1;
-    });
-  },
+  student2.isMarried = false;
 
-  getAverageMark: function() {
+// console.log('Case 1: adding property', student1);
 
-    var marksSum = this.marks.reduce(function(acc, item) {
-      return acc + item;
-    });
+  var student3 = student2;
 
-    return Math.round(marksSum / this.marks.length);
+  student3.isMarried = true;
+
+// console.log('Case 2: changing property', student1);
+
+  var student4 = student3;
+
+  student1 = {
+    name: 'Ania',
+    sex: 'female',
+  };
+
+// console.log('Case 3: changing link -- first object', student1);
+// console.log('Case 4: changing link -- last object', student4);
+
+  changeGender(student4);
+
+// console.log('Case 5: mutating object by link ', student4);
+
+  function changeGender(student) {
+    student.sex = 'female';
   }
-};
 
-var student1 = {
-  marks: [10, 8, 3, 4, 5, 6, 2, 7, 3, 2]
-};
-
-var student2 = {
-  marks: [8, 2, 6, 4, 5, 6, 7, 4, 2]
-};
-
-Object.setPrototypeOf(student1, studentOperator);
-Object.setPrototypeOf(student2, studentOperator);
-
-console.log('Sorted marks: ', student1.getSortedMarks());
-console.log('Average mark is: ', student2.getAverageMark());
+})();
